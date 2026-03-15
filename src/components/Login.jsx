@@ -5,6 +5,8 @@ import { useSettings } from '../context/SettingsContext.jsx';
 import backgroundImg from '../assets/background.jpg';
 import './login.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+
 export default function Login({ onLogin }) {
     const [nrp, setNrp] = useState('');
     const [password, setPassword] = useState('');
@@ -25,7 +27,7 @@ export default function Login({ onLogin }) {
 
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:8000/api/auth/login', {
+            const res = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nrp, password }),

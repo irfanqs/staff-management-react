@@ -53,6 +53,8 @@ export default function App() {
     const [activeNrp, setActiveNrp] = useState(null);
     const [navParams, setNavParams] = useState({});
     const [adminData, setAdminData] = useState(null);
+    
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
     // Restore session on app load (when user refreshes page)
     useEffect(() => {
@@ -71,7 +73,7 @@ export default function App() {
                 
                 // Verify token is still valid by calling API (non-blocking)
                 // Only logout if we get 401/403, ignore network errors to avoid false logouts
-                fetch('http://localhost:8000/api/profile', {
+                fetch(`${API_URL}/profile`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
@@ -117,7 +119,7 @@ export default function App() {
     function handleLogout() {
         const token = localStorage.getItem('token');
         if (token) {
-            fetch('http://localhost:8000/api/auth/logout', {
+            fetch(`${API_URL}/auth/logout`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
